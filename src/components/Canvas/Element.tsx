@@ -1,14 +1,19 @@
 import React from 'react';
-import { Element as ElementType } from '../../types';
 import { useBuilder } from '../../context/BuilderContext';
 import { ElementTypes } from '../../constants';
 
 interface ElementProps {
-  element: ElementType;
+  element: {
+    id: string;
+    type: string;
+    content: string;
+    styles: Record<string, string>;
+  };
 }
 
 export const Element: React.FC<ElementProps> = ({ element }) => {
-  const { dispatch } = useBuilder();
+  const { state, dispatch } = useBuilder();
+  const isSelected = state.selectedElement?.id === element.id;
 
   const handleClick = () => {
     dispatch({ type: 'SET_SELECTED_ELEMENT', payload: element });
@@ -17,34 +22,28 @@ export const Element: React.FC<ElementProps> = ({ element }) => {
   const renderElement = () => {
     switch (element.type) {
       case ElementTypes.HEADING:
-        return (
-          <h2 className="h2" style={element.styles}>
-            {element.content}
-          </h2>
-        );
+        return <h2 style={element.styles}>{element.content}</h2>;
       case ElementTypes.TEXT:
-        return (
-          <p className="lead" style={element.styles}>
-            {element.content}
-          </p>
-        );
+        return <p style={element.styles}>{element.content}</p>;
       case ElementTypes.BUTTON:
-        return (
-          <button className="btn btn-primary" style={element.styles}>
-            {element.content}
-          </button>
-        );
+        return <button style={element.styles}>{element.content}</button>;
       case ElementTypes.IMAGE:
-        return <img src={element.content} alt="Content" className="img-fluid" style={element.styles} />;
+        return <img src={element.content} alt="Content" style={element.styles} />;
       default:
         return null;
     }
   };
 
   return (
-    <div onClick={handleClick} className="position-relative element-wrapper" style={{ cursor: 'pointer' }}>
+    <div
+      onClick={handleClick}
+      style={{
+        cursor: 'pointer',
+        border: isSelected ? '1px solid blue' : 'none',
+        padding: isSelected ? '4px' : '0',
+      }}
+    >
       {renderElement()}
-      <div className="element-overlay position-absolute top-0 start-0 w-100 h-100" />
     </div>
   );
 };

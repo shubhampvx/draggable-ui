@@ -1,60 +1,55 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { Element, Section } from '../types';
+import { v4 as uuidv4 } from 'uuid';
+
+interface Element {
+  id: string;
+  type: string;
+  content: string;
+  styles: Record<string, string>;
+}
 
 interface BuilderState {
-  sections: Section[];
+  elements: Element[];
   selectedElement: Element | null;
 }
 
 type BuilderAction =
-  | { type: 'ADD_SECTION'; payload: Section }
-  | { type: 'REMOVE_SECTION'; payload: string }
+  | { type: 'ADD_ELEMENT'; payload: Element }
   | { type: 'UPDATE_ELEMENT'; payload: { elementId: string; updates: Partial<Element> } }
   | { type: 'SET_SELECTED_ELEMENT'; payload: Element | null }
-  | { type: 'ADD_ELEMENT_TO_SECTION'; payload: { sectionId: string; element: Element } };
+  | { type: 'DELETE_ELEMENT'; payload: string };
+
 const initialState: BuilderState = {
-  sections: [
-    { id: 'hero-section', type: 'hero', elements: [] },
-    { id: 'features-section', type: 'features', elements: [] },
-  ],
+  elements: [],
   selectedElement: null,
 };
 
 const builderReducer = (state: BuilderState, action: BuilderAction): BuilderState => {
   switch (action.type) {
-    case 'ADD_SECTION':
+    case 'ADD_ELEMENT':
       return {
         ...state,
-        sections: [...state.sections, action.payload],
-      };
-    case 'REMOVE_SECTION':
-      return {
-        ...state,
-        sections: state.sections.filter((section) => section.id !== action.payload),
+        elements: [...state.elements, action.payload],
       };
     case 'UPDATE_ELEMENT':
       return {
         ...state,
-        sections: state.sections.map((section) => ({
-          ...section,
-          elements: section.elements.map((element) =>
-            element.id === action.payload.elementId ? { ...element, ...action.payload.updates } : element
-          ),
-        })),
+        elements: state.elements.map((element) =>
+          element.id === action.payload.elementId
+            ? { ...element, ...action.payload.updates, styles: { ...element.styles, ...action.payload.updates.styles } }
+            : element
+        ),
+      };
+    case 'DELETE_ELEMENT':
+      return {
+        ...state,
+        elements: state.elements.filter((element) => element.id !== action.payload),
+        selectedElement: state.selectedElement?.id === action.payload ? null : state.selectedElement,
       };
     case 'SET_SELECTED_ELEMENT':
       return {
         ...state,
         selectedElement: action.payload,
-      };
-    case 'ADD_ELEMENT_TO_SECTION':
-      return {
-        ...state,
-        sections: state.sections.map((section) =>
-          section.id === action.payload.sectionId
-            ? { ...section, elements: [...section.elements, action.payload.element] }
-            : section
-        ),
       };
     default:
       return state;
