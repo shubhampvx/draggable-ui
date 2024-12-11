@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Element {
   id: string;
   type: string;
   content: string;
   styles: Record<string, string>;
+  children?: Element[];
 }
 
 interface BuilderState {
@@ -17,7 +17,8 @@ type BuilderAction =
   | { type: 'ADD_ELEMENT'; payload: Element }
   | { type: 'UPDATE_ELEMENT'; payload: { elementId: string; updates: Partial<Element> } }
   | { type: 'SET_SELECTED_ELEMENT'; payload: Element | null }
-  | { type: 'DELETE_ELEMENT'; payload: string };
+  | { type: 'DELETE_ELEMENT'; payload: string }
+  | { type: 'SET_ELEMENTS'; payload: Element[] };
 
 const initialState: BuilderState = {
   elements: [],
@@ -32,24 +33,40 @@ const builderReducer = (state: BuilderState, action: BuilderAction): BuilderStat
         elements: [...state.elements, action.payload],
       };
     case 'UPDATE_ELEMENT':
-      return {
-        ...state,
-        elements: state.elements.map((element) =>
+      const updateElement = (elements: Element[]): Element[] => {
+        return elements.map((element) =>
           element.id === action.payload.elementId
             ? { ...element, ...action.payload.updates, styles: { ...element.styles, ...action.payload.updates.styles } }
-            : element
-        ),
+            : { ...element, children: updateElement(element.children || []) }
+        );
       };
-    case 'DELETE_ELEMENT':
       return {
         ...state,
-        elements: state.elements.filter((element) => element.id !== action.payload),
+        elements: updateElement(state.elements),
+      };
+    case 'DELETE_ELEMENT':
+      const deleteElement = (elements: Element[], elementId: string): Element[] => {
+        return elements
+          .filter((element) => element.id !== elementId)
+          .map((element) => ({
+            ...element,
+            children: deleteElement(element.children || [], elementId),
+          }));
+      };
+      return {
+        ...state,
+        elements: deleteElement(state.elements, action.payload),
         selectedElement: state.selectedElement?.id === action.payload ? null : state.selectedElement,
       };
     case 'SET_SELECTED_ELEMENT':
       return {
         ...state,
         selectedElement: action.payload,
+      };
+    case 'SET_ELEMENTS':
+      return {
+        ...state,
+        elements: action.payload,
       };
     default:
       return state;

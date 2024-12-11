@@ -1,4 +1,5 @@
 import { Accordion } from 'react-bootstrap';
+import { borderTypes } from './constants';
 
 type Props = {
   localStyles: Record<string, string>;
@@ -18,12 +19,13 @@ const BorderAccordion = (props: Props) => {
               <select
                 className="form-select"
                 value={props.borderStyle}
-                onChange={(e) => props.handleStyleChange('borderStyle', e.target.value)}
+                onChange={(e) => props.handleStyleChange('border-style', e.target.value)}
               >
-                <option value="none">None</option>
-                <option value="solid">Solid</option>
-                <option value="dotted">Dotted</option>
-                <option value="dashed">Dashed</option>
+                {borderTypes.map((item) => (
+                  <option key={item.label} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -31,8 +33,8 @@ const BorderAccordion = (props: Props) => {
               <input
                 type="color"
                 className="form-control form-control-color"
-                value={props.localStyles.borderColor || '#0000'}
-                onChange={(e) => props.handleStyleChange('borderColor', e.target.value)}
+                value={props.localStyles['border-color'] || '#0000'}
+                onChange={(e) => props.handleStyleChange('border-color', e.target.value)}
               />
             </div>
           </div>
@@ -42,8 +44,9 @@ const BorderAccordion = (props: Props) => {
               <input
                 type="number"
                 className="form-control"
-                value={props.localStyles.borderWidth ? parseFloat(props.localStyles.borderWidth) : ''}
-                onChange={(e) => props.handleStyleChange('borderWidth', e.target.value + 'px')}
+                value={props.localStyles['border-width'] ? parseFloat(props.localStyles['border-width']) : ''}
+                onChange={(e) => props.handleStyleChange('border-width', e.target.value + 'px')}
+                min={0}
               />
               <div className="input-group-text">px</div>
             </div>
@@ -55,8 +58,9 @@ const BorderAccordion = (props: Props) => {
               <input
                 type="number"
                 className="form-control"
-                value={props.localStyles.borderRadius ? parseFloat(props.localStyles.borderRadius) : ''}
-                onChange={(e) => props.handleStyleChange('borderRadius', e.target.value + 'px')}
+                value={props.localStyles['border-radius'] ? parseFloat(props.localStyles['border-radius']) : ''}
+                onChange={(e) => props.handleStyleChange('border-radius', e.target.value + 'px')}
+                min={0}
               />
               <div className="input-group-text">px</div>
             </div>

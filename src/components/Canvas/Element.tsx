@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useBuilder } from '../../context/BuilderContext';
 import { ElementTypes } from '../../constants';
+import parse from 'html-react-parser';
 
 interface ElementProps {
   element: {
@@ -8,14 +9,17 @@ interface ElementProps {
     type: string;
     content: string;
     styles: Record<string, string>;
+    children?: Element[];
+    html?: string;
   };
 }
 
 export const Element: React.FC<ElementProps> = ({ element }) => {
-  const { state, dispatch } = useBuilder();
-  const isSelected = state.selectedElement?.id === element.id;
+  const { dispatch } = useBuilder();
+  const [isHovered, setIsHovered] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch({ type: 'SET_SELECTED_ELEMENT', payload: element });
   };
 
@@ -29,18 +33,30 @@ export const Element: React.FC<ElementProps> = ({ element }) => {
         return <button style={element.styles}>{element.content}</button>;
       case ElementTypes.IMAGE:
         return <img src={element.content} alt="Content" style={element.styles} />;
+      case 'div':
+        return (
+          <div style={element.styles}>
+            {element.children?.map((child) => (
+              <Element key={child.id} element={child} />
+            ))}
+          </div>
+        );
+      case 'i':
+        return <i className={element?.styles?.className}></i>;
       default:
-        return null;
+        return parse(element.html || '');
     }
   };
 
   return (
     <div
       onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         cursor: 'pointer',
-        border: isSelected ? '1px solid blue' : 'none',
-        padding: isSelected ? '4px' : '0',
+        border: isHovered ? '1px solid blue' : 'none',
+        ...element.styles,
       }}
     >
       {renderElement()}

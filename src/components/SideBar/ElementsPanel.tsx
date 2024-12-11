@@ -32,7 +32,7 @@ const DraggableElement: React.FC<{ type: string; label: string }> = ({ type, lab
 
 export const ElementsPanel: React.FC = () => {
   return (
-    <div className="p-3">
+    <div className="px-1 py-3">
       <Accordion>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Elements</Accordion.Header>
