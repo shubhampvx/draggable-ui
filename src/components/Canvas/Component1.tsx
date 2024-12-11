@@ -20,11 +20,10 @@ export const Component1: React.FC<Component1Props> = ({ element }) => {
   };
 
   return (
-    <section
+    <div
       onClick={(e) => handleClick(e, element)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="container-lg"
       style={{
         cursor: 'pointer',
         position: 'relative',
@@ -49,7 +48,7 @@ export const Component1: React.FC<Component1Props> = ({ element }) => {
           {element.children?.map((child) => renderChild(child))}
         </div>
       </section>
-    </section>
+    </div>
   );
 };
 
@@ -60,13 +59,13 @@ interface ChildElementProps {
 
 const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
   const [isHoverChild, setIsHoverChild] = useState(false);
-
   const handleChildClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleClick(e, child);
   };
 
   const renderElement = () => {
+    const { className, ...styles } = child.styles;
     switch (child.type) {
       case 'div':
         return (
@@ -74,9 +73,9 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
             onClick={handleChildClick}
             onMouseEnter={() => setIsHoverChild(true)}
             onMouseLeave={() => setIsHoverChild(false)}
-            className={child.styles.className}
+            className={className}
             style={{
-              ...child.styles,
+              ...styles,
               position: 'relative',
             }}
           >
@@ -106,9 +105,9 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
             onMouseLeave={() => setIsHoverChild(false)}
             src={child.content}
             alt="Content"
-            className={child.styles.className}
+            className={className}
             style={{
-              ...child.styles,
+              ...styles,
               position: 'relative',
             }}
           />
@@ -119,13 +118,12 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
             onClick={handleChildClick}
             onMouseEnter={() => setIsHoverChild(true)}
             onMouseLeave={() => setIsHoverChild(false)}
-            className={child.styles.className}
+            className={className}
             style={{
-              ...child.styles,
+              ...styles,
               position: 'relative',
             }}
           >
-            {child.content}
             {isHoverChild && (
               <div
                 style={{
@@ -139,6 +137,10 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
                 }}
               />
             )}
+            {child.children?.map((grandchild) => (
+              <ChildElement key={grandchild.id} child={grandchild} handleClick={handleClick} />
+            ))}
+            {child.content}
           </h2>
         );
       case 'p':
@@ -147,9 +149,9 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
             onClick={handleChildClick}
             onMouseEnter={() => setIsHoverChild(true)}
             onMouseLeave={() => setIsHoverChild(false)}
-            className={child.styles.className}
+            className={className}
             style={{
-              ...child.styles,
+              ...styles,
               position: 'relative',
             }}
           >
@@ -175,9 +177,9 @@ const ChildElement: React.FC<ChildElementProps> = ({ child, handleClick }) => {
             onClick={handleChildClick}
             onMouseEnter={() => setIsHoverChild(true)}
             onMouseLeave={() => setIsHoverChild(false)}
-            className={child.styles.className}
+            className={className}
             style={{
-              ...child.styles,
+              ...styles,
               position: 'relative',
             }}
           >

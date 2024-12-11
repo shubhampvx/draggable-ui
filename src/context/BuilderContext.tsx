@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-
-interface Element {
-  id: string;
-  type: string;
-  content: string;
-  styles: Record<string, string>;
-  children?: Element[];
-}
+import { Element } from '../types';
 
 interface BuilderState {
   elements: Element[];
@@ -36,7 +29,15 @@ const builderReducer = (state: BuilderState, action: BuilderAction): BuilderStat
       const updateElement = (elements: Element[]): Element[] => {
         return elements.map((element) =>
           element.id === action.payload.elementId
-            ? { ...element, ...action.payload.updates, styles: { ...element.styles, ...action.payload.updates.styles } }
+            ? {
+                ...element,
+                ...action.payload.updates,
+                styles: Object.fromEntries(
+                  Object.entries({ ...element.styles, ...action.payload.updates.styles }).filter(
+                    ([, value]) => value && !['px', 'rem', 'em', 'vh', 'vw', '%'].includes(value)
+                  )
+                ),
+              }
             : { ...element, children: updateElement(element.children || []) }
         );
       };

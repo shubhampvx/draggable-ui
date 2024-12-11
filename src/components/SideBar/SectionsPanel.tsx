@@ -12,42 +12,21 @@ const sections = [
     children: [
       {
         type: 'div',
-        styles: {
-          className: 'col-12 col-md-6 d-flex align-items-center justify-content-center features-img',
-        },
-        children: [
-          {
-            type: 'img',
-            content: images.image_57,
-            styles: {
-              className: 'img-fluid',
-            },
-          },
-        ],
+        styles: { className: 'col-12 col-md-6 d-flex align-items-center justify-content-center features-img' },
+        children: [{ type: 'img', content: images.image_57, styles: { className: 'img-fluid' } }],
       },
       {
         type: 'div',
-        styles: {
-          className: 'col-12 col-md-6 features-content',
-        },
+        styles: { className: 'col-12 col-md-6 features-content' },
         children: [
           {
             type: 'h2',
             content: 'Pay on the Go',
-            children: [
-              {
-                type: 'i',
-                styles: {
-                  className: 'fa-solid fa-location-crosshairs rounded-circle',
-                },
-              },
-            ],
+            children: [{ type: 'i', styles: { className: 'fa-solid fa-location-crosshairs rounded-circle' } }],
           },
           {
             type: 'p',
-            styles: {
-              className: 'd-flex align-itmes-center justify-content-center gap-3 mt-3',
-            },
+            styles: { className: 'd-flex align-itmes-center justify-content-center gap-3 mt-3' },
             content:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitationLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation',
           },
@@ -83,7 +62,7 @@ const DraggableSection: React.FC<{
 
 export const SectionsPanel: React.FC = () => {
   return (
-    <div className="p-3">
+    <div className="px-1">
       <Accordion>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Sections</Accordion.Header>

@@ -12,44 +12,24 @@ export const DropZone: React.FC = () => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ['ELEMENT', 'SECTION'],
     drop: (item: { type: string; html?: string; children?: Element[] }) => {
-      console.log('item', item);
+      const processChildren = (children: Element[] | undefined): Element[] | undefined => {
+        return children?.map((child) => ({
+          id: uuidv4(),
+          type: child.type,
+          content: child.content,
+          styles: child.styles || {},
+          children: processChildren(child.children),
+        }));
+      };
+
       let newElement;
-      if (item.html) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(item.html, 'text/html');
-        newElement = {
-          id: uuidv4(),
-          type: item.type,
-          html: doc.body.innerHTML,
-          content: '',
-          styles: {},
-          children: item.children?.map((child) => ({
-            id: uuidv4(),
-            type: child.type,
-            content: child.content,
-            styles: child.styles || {},
-          })),
-        };
-      } else {
-        newElement = {
-          id: uuidv4(),
-          type: item.type,
-          content: `New ${item.type}`,
-          styles: {},
-          children: item.children?.map((child) => ({
-            id: uuidv4(),
-            type: child.type,
-            content: child.content,
-            styles: child.styles || {},
-            children: child.children?.map((grandchild) => ({
-              id: uuidv4(),
-              type: grandchild.type,
-              content: grandchild.content,
-              styles: grandchild.styles || {},
-            })),
-          })),
-        };
-      }
+      newElement = {
+        id: uuidv4(),
+        type: item.type,
+        content: `New ${item.type}`,
+        styles: {},
+        children: processChildren(item.children),
+      };
       dispatch({ type: 'ADD_ELEMENT', payload: newElement });
     },
     collect: (monitor) => ({
@@ -63,8 +43,6 @@ export const DropZone: React.FC = () => {
     }
     return <RenderedElement element={element} />;
   };
-
-  console.log('state.elements', state.elements);
 
   return (
     <div

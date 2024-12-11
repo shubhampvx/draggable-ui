@@ -4,7 +4,6 @@ export interface Element {
   content?: string;
   styles?: Record<string, string>;
   children?: Element[];
-  html?: string;
 }
 
 export interface Section {

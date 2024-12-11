@@ -1,5 +1,5 @@
 import { Accordion } from 'react-bootstrap';
-import { positions } from './constants';
+import { positionAttributes, positions } from './constants';
 
 type Props = {
   localStyles: Record<string, string>;
@@ -7,6 +7,21 @@ type Props = {
 };
 
 const Position = ({ localStyles, handleStyleChange }: Props) => {
+  const renderInput = (label: string, key: string) => (
+    <div className="mb-3">
+      <label className="form-label">{label}</label>
+      <div className="input-group">
+        <input
+          type="number"
+          className="form-control"
+          value={localStyles[key] ? parseFloat(localStyles[key]) : ''}
+          onChange={(e) => handleStyleChange(key, e.target.value + 'px')}
+        />
+        <div className="input-group-text">px</div>
+      </div>
+    </div>
+  );
+
   return (
     <Accordion>
       <Accordion.Item eventKey="0">
@@ -26,6 +41,7 @@ const Position = ({ localStyles, handleStyleChange }: Props) => {
               ))}
             </select>
           </div>
+          {positionAttributes.map((position) => renderInput(position.name, position.value))}
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

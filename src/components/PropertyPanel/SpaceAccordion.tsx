@@ -11,201 +11,72 @@ const SpaceAccordion = ({ localStyles, setLocalStyles, handleStyleChange }: Prop
   const [marginSwitch, setMarginSwitch] = useState(true);
   const [paddingSwitch, setPaddingSwitch] = useState(true);
 
+  const handleSwitchChange = (type: 'margin' | 'padding', checked: boolean) => {
+    const setSwitch = type === 'margin' ? setMarginSwitch : setPaddingSwitch;
+    setSwitch(checked);
+    setLocalStyles((prevStyles) => ({
+      ...prevStyles,
+      [type]: '',
+      [`${type}-top`]: '',
+      [`${type}-right`]: '',
+      [`${type}-bottom`]: '',
+      [`${type}-left`]: '',
+    }));
+  };
+
+  const renderInput = (label: string, key: string) => (
+    <div className="mb-3">
+      <label className="form-label">{label}</label>
+      <div className="input-group">
+        <input
+          type="number"
+          className="form-control"
+          value={localStyles[key] ? parseFloat(localStyles[key]) : ''}
+          onChange={(e) => handleStyleChange(key, e.target.value + 'px')}
+        />
+        <div className="input-group-text">px</div>
+      </div>
+    </div>
+  );
+
+  const renderSpaceInputs = (type: 'margin' | 'padding', switchState: boolean) => {
+    if (switchState) {
+      return renderInput(type.charAt(0).toUpperCase() + type.slice(1), type);
+    } else {
+      return (
+        <>
+          {renderInput(`${type.charAt(0).toUpperCase() + type.slice(1)} Top`, `${type}-top`)}
+          {renderInput(`${type.charAt(0).toUpperCase() + type.slice(1)} Right`, `${type}-right`)}
+          {renderInput(`${type.charAt(0).toUpperCase() + type.slice(1)} Bottom`, `${type}-bottom`)}
+          {renderInput(`${type.charAt(0).toUpperCase() + type.slice(1)} Left`, `${type}-left`)}
+        </>
+      );
+    }
+  };
+
   return (
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Space</Accordion.Header>
         <Accordion.Body>
-          <div>
-            <Form>
-              <Form.Check
-                type="switch"
-                id="custom-switch"
-                label="Even margin for all sides"
-                checked={marginSwitch}
-                onChange={(e) => {
-                  setMarginSwitch(e.target.checked);
-                  setLocalStyles((prevStyles) => ({
-                    ...prevStyles,
-                    margin: '',
-                    'margin-top': '',
-                    'margin-right': '',
-                    'margin-bottom': '',
-                    'margin-left': '',
-                  }));
-                }}
-              />
-            </Form>
-            {marginSwitch ? (
-              <div className="mt-3 mb-3">
-                <label className="form-label">Margin</label>
-                <div className="input-group">
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={localStyles.margin ? parseFloat(localStyles.margin) : ''}
-                    onChange={(e) => handleStyleChange('margin', e.target.value + 'px')}
-                    min={0}
-                  />
-                  <div className="input-group-text">px</div>
-                </div>
-              </div>
-            ) : (
-              <React.Fragment>
-                <div className="d-flex align-items-center justify-content-between mt-3 mb-3">
-                  <div>
-                    <label className="form-label">Margin Top</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['margin-top'] ? parseFloat(localStyles['margin-top']) : ''}
-                        onChange={(e) => handleStyleChange('margin-top', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="form-label">Margin Right</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['margin-right'] ? parseFloat(localStyles['margin-right']) : ''}
-                        onChange={(e) => handleStyleChange('margin-right', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between mt-3 mb-3">
-                  <div>
-                    <label className="form-label">Margin Bottom</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['margin-bottom'] ? parseFloat(localStyles['margin-bottom']) : ''}
-                        onChange={(e) => handleStyleChange('margin-bottom', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="form-label">Margin Left</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['margin-left'] ? parseFloat(localStyles['margin-left']) : ''}
-                        onChange={(e) => handleStyleChange('margin-left', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                </div>
-              </React.Fragment>
-            )}
-          </div>
-          <div>
-            <Form>
-              <Form.Check
-                type="switch"
-                id="custom-switch"
-                label="Even padding for all sides"
-                checked={paddingSwitch}
-                onChange={(e) => {
-                  setPaddingSwitch(e.target.checked);
-                  setLocalStyles((prevStyles) => ({
-                    ...prevStyles,
-                    padding: '',
-                    'padding-top': '',
-                    'padding-right': '',
-                    'padding-bottom': '',
-                    'padding-left': '',
-                  }));
-                }}
-              />
-            </Form>
-            {paddingSwitch ? (
-              <div className="mt-3 mb-3">
-                <label className="form-label">Padding</label>
-                <div className="input-group">
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={localStyles.padding ? parseFloat(localStyles.padding) : ''}
-                    onChange={(e) => handleStyleChange('padding', e.target.value + 'px')}
-                    min={0}
-                  />
-                  <div className="input-group-text">px</div>
-                </div>
-              </div>
-            ) : (
-              <React.Fragment>
-                <div className="d-flex align-items-center justify-content-between mt-3 mb-3">
-                  <div>
-                    <label className="form-label">Padding Top</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['padding-top'] ? parseFloat(localStyles['padding-top']) : ''}
-                        onChange={(e) => handleStyleChange('padding-top', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="form-label">Padding Right</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['padding-right'] ? parseFloat(localStyles['padding-right']) : ''}
-                        onChange={(e) => handleStyleChange('padding-right', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between mt-3 mb-3">
-                  <div>
-                    <label className="form-label">Padding Bottom</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['padding-bottom'] ? parseFloat(localStyles['padding-bottom']) : ''}
-                        onChange={(e) => handleStyleChange('padding-bottom', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="form-label">Padding Left</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={localStyles['padding-left'] ? parseFloat(localStyles['padding-left']) : ''}
-                        onChange={(e) => handleStyleChange('padding-left', e.target.value + 'px')}
-                        min={0}
-                      />
-                      <div className="input-group-text">px</div>
-                    </div>
-                  </div>
-                </div>
-              </React.Fragment>
-            )}
-          </div>
+          <Form>
+            <Form.Check
+              type="switch"
+              id="margin-switch"
+              label="Even margin for all sides"
+              checked={marginSwitch}
+              onChange={(e) => handleSwitchChange('margin', e.target.checked)}
+            />
+            {renderSpaceInputs('margin', marginSwitch)}
+            <Form.Check
+              type="switch"
+              id="padding-switch"
+              label="Even padding for all sides"
+              checked={paddingSwitch}
+              onChange={(e) => handleSwitchChange('padding', e.target.checked)}
+            />
+            {renderSpaceInputs('padding', paddingSwitch)}
+          </Form>
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

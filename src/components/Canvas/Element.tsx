@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { useBuilder } from '../../context/BuilderContext';
 import { ElementTypes } from '../../constants';
-import parse from 'html-react-parser';
+import { Element as RenderedElement } from '../../types';
 
 interface ElementProps {
-  element: {
-    id: string;
-    type: string;
-    content: string;
-    styles: Record<string, string>;
-    children?: Element[];
-    html?: string;
-  };
+  element: RenderedElement;
 }
 
 export const Element: React.FC<ElementProps> = ({ element }) => {
@@ -44,7 +37,7 @@ export const Element: React.FC<ElementProps> = ({ element }) => {
       case 'i':
         return <i className={element?.styles?.className}></i>;
       default:
-        return parse(element.html || '');
+        return null;
     }
   };
 

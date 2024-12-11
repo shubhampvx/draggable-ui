@@ -249,3 +249,22 @@ export const textBreakings = [
   { name: 'Keep All', value: 'keep-all' },
   { name: 'Break Word', value: 'break-word' },
 ];
+
+export const positionAttributes = [
+  {
+    name: 'Top',
+    value: 'top',
+  },
+  {
+    name: 'Bottom',
+    value: 'bottom',
+  },
+  {
+    name: 'Left',
+    value: 'left',
+  },
+  {
+    name: 'Right',
+    value: 'right',
+  },
+];
