@@ -4,6 +4,8 @@ export interface Element {
   content?: string;
   styles?: Record<string, string>;
   children?: Element[];
+  order?: 'content-first' | 'content-last';
+  href?: string;
 }
 
 export interface Section {

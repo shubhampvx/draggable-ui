@@ -25,24 +25,26 @@ export const PropertyPanel: React.FC = () => {
     borderStyle: 'solid',
   });
   const [localContent, setLocalContent] = useState<string>('');
+  const [link, setLink] = useState<string>('');
   const [borderStyle, setBorderStyle] = useState<string>('none');
 
   useEffect(() => {
     if (selectedElement) {
       setLocalStyles({
-        backgroundColor: selectedElement.styles.backgroundColor || '#ffffff',
-        color: selectedElement.styles.color || '#000000',
-        fontSize: selectedElement.styles.fontSize || '16px',
-        padding: selectedElement.styles.padding || '0px',
-        margin: selectedElement.styles.margin || '0px',
-        border: selectedElement.styles.border || 'none',
-        borderRadius: selectedElement.styles.borderRadius || '0px',
-        width: selectedElement.styles.width || 'auto',
-        height: selectedElement.styles.height || 'auto',
+        backgroundColor: selectedElement?.styles?.backgroundColor || '#ffffff',
+        color: selectedElement?.styles?.color || '#000000',
+        fontSize: selectedElement?.styles?.fontSize || '16px',
+        padding: selectedElement?.styles?.padding || '0px',
+        margin: selectedElement?.styles?.margin || '0px',
+        border: selectedElement?.styles?.border || 'none',
+        borderRadius: selectedElement?.styles?.borderRadius || '0px',
+        width: selectedElement?.styles?.width || 'auto',
+        height: selectedElement?.styles?.height || 'auto',
       });
-      setBorderStyle(selectedElement.styles['border-style']);
-      setLocalStyles(selectedElement.styles);
-      setLocalContent(selectedElement.content);
+      setBorderStyle(selectedElement?.styles?.['border-style'] || 'none');
+      setLocalStyles(selectedElement?.styles || {});
+      setLocalContent(selectedElement?.content || '');
+      setLink(selectedElement?.href || '');
     }
   }, [selectedElement]);
 
@@ -72,6 +74,14 @@ export const PropertyPanel: React.FC = () => {
     });
   };
 
+  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLink(e.target.value);
+    dispatch({
+      type: 'UPDATE_ELEMENT',
+      payload: { elementId: selectedElement.id, updates: { href: e.target.value } },
+    });
+  };
+
   const handleDelete = () => {
     if (selectedElement) {
       dispatch({ type: 'DELETE_ELEMENT', payload: selectedElement.id });
@@ -90,6 +100,12 @@ export const PropertyPanel: React.FC = () => {
         <label className="form-label">{selectedElement.type === 'image' ? 'Source' : 'Text'}</label>
         <input type="text" className="form-control" value={localContent} onChange={handleContentChange} />
       </div>
+      {selectedElement.type === 'a' && (
+        <div className="mb-3">
+          <label className="form-label">{'Link'}</label>
+          <input type="text" className="form-control" value={link} onChange={handleLinkChange} />
+        </div>
+      )}
       <div className="d-flex align-items-center justify-content-between mb-3">
         <div>
           <label className="form-label">Background Color</label>

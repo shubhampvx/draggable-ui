@@ -7,7 +7,7 @@ export const CodePanel: React.FC = () => {
   const [code, setCode] = useState('');
 
   useEffect(() => {
-    setCode(generateFullHTML());
+    setCode(generateFullHTML().trim());
   }, [state]);
 
   const generateClassName = (elementId: string) => `element-${elementId}`;
@@ -53,6 +53,27 @@ export const CodePanel: React.FC = () => {
         childrenHTML = element.children.map((child) => generateElementHTML(child)).join('');
       }
 
+      const componentTypes = new Set([
+        'component-1',
+        'component-2',
+        'component-3',
+        'component-4',
+        'component-5',
+        'component-9',
+        'component-10',
+        'component-19',
+      ]);
+
+      if (componentTypes.has(element.type.toLowerCase())) {
+        return `
+      <section class="container-lg ${classAttribute}">
+        <div class="features-part flex-column flex-md-row d-flex align-items-center justify-content-center gap-4">
+          ${childrenHTML}
+        </div>
+      </section>
+    `;
+      }
+
       switch (element.type.toLowerCase()) {
         case 'heading':
           return `<h2 class="${classAttribute}">${element.content}${childrenHTML}</h2>`;
@@ -62,22 +83,20 @@ export const CodePanel: React.FC = () => {
           return `<button class="${classAttribute}">${element.content}${childrenHTML}</button>`;
         case 'image':
           return `<img src="${element.content}" alt="Content" class="${classAttribute}" />`;
-        case 'component-1':
-          return `
-            <section class="container-lg ${classAttribute}">
-              <div class="features-part flex-column flex-md-row d-flex align-items-center justify-content-center gap-4">
-                ${childrenHTML}
-              </div>
-            </section>
-          `;
         case 'div':
           return `<div class="${classAttribute}">${childrenHTML}</div>`;
         case 'img':
           return `<img src="${element.content}" alt="Content" class="${classAttribute}" />`;
         case 'h2':
-          return `<h2 class="${classAttribute}">${element.content}${childrenHTML}</h2>`;
+          return `<h2 class="${classAttribute}">
+          ${element.order === 'content-first' ? element.content : ''}
+          ${childrenHTML}
+          ${element.order === 'content-last' ? element.content : ''}
+          </h2>`;
         case 'p':
           return `<p class="${classAttribute}">${element.content}${childrenHTML}</p>`;
+        case 'a':
+          return `<a href="${element.href}" class="${classAttribute}">${element.content}${childrenHTML}</a>`;
         case 'i':
           return `<i class="${classAttribute}">${childrenHTML}</i>`;
         default:

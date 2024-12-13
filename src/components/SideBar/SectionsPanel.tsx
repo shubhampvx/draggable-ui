@@ -1,40 +1,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { Accordion } from 'react-bootstrap';
-import Component1 from '../../assets/Component1';
-import { images } from '../../images';
-
-const sections = [
-  {
-    type: 'component-1',
-    label: 'Component 1',
-    svg: <Component1 />,
-    children: [
-      {
-        type: 'div',
-        styles: { className: 'col-12 col-md-6 d-flex align-items-center justify-content-center features-img' },
-        children: [{ type: 'img', content: images.image_57, styles: { className: 'img-fluid' } }],
-      },
-      {
-        type: 'div',
-        styles: { className: 'col-12 col-md-6 features-content' },
-        children: [
-          {
-            type: 'h2',
-            content: 'Pay on the Go',
-            children: [{ type: 'i', styles: { className: 'fa-solid fa-location-crosshairs rounded-circle' } }],
-          },
-          {
-            type: 'p',
-            styles: { className: 'd-flex align-itmes-center justify-content-center gap-3 mt-3' },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitationLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation',
-          },
-        ],
-      },
-    ],
-  },
-];
+import { sections } from './staticData';
 
 const DraggableSection: React.FC<{
   type: string;

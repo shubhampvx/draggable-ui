@@ -4,14 +4,14 @@ import { useBuilder } from '../../context/BuilderContext';
 import { v4 as uuidv4 } from 'uuid';
 import { Element as RenderedElement } from './Element';
 import { Element } from '../../types';
-import { Component1 } from './Component1';
+import { MultiElement } from './MultiElement';
 
 export const DropZone: React.FC = () => {
   const { state, dispatch } = useBuilder();
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ['ELEMENT', 'SECTION'],
-    drop: (item: { type: string; html?: string; children?: Element[] }) => {
+    drop: (item: { type: string; order?: 'content-first' | 'content-last'; href?: string; children?: Element[] }) => {
       const processChildren = (children: Element[] | undefined): Element[] | undefined => {
         return children?.map((child) => ({
           id: uuidv4(),
@@ -19,6 +19,8 @@ export const DropZone: React.FC = () => {
           content: child.content,
           styles: child.styles || {},
           children: processChildren(child.children),
+          order: child.order,
+          href: child.href,
         }));
       };
 
@@ -29,6 +31,8 @@ export const DropZone: React.FC = () => {
         content: `New ${item.type}`,
         styles: {},
         children: processChildren(item.children),
+        order: item.order,
+        href: item.href,
       };
       dispatch({ type: 'ADD_ELEMENT', payload: newElement });
     },
@@ -39,7 +43,7 @@ export const DropZone: React.FC = () => {
 
   const renderElement = (element: Element) => {
     if (element.children && element.children.length > 0) {
-      return <Component1 element={element} />;
+      return <MultiElement element={element} />;
     }
     return <RenderedElement element={element} />;
   };
