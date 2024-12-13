@@ -39,7 +39,3 @@ To get started with the draggable UI component library, follow these steps:
    ```sh
    npm run build
    ```
-
-## Usage
-
-To use the draggable components in your project, import them and add them to your JSX:
