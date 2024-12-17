@@ -46,6 +46,7 @@ const HoverElement = ({ hover }: { hover: boolean }) => {
         bottom: 0,
         border: '1px solid blue',
         pointerEvents: 'none',
+        zIndex: 100,
       }}
     />
   );

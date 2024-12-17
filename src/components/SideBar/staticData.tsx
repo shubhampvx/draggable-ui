@@ -130,6 +130,81 @@ export const sections = [
       children: commonChildren('i', 'content-first', a),
     })
   ),
+  createComponent('component-7', 'Component 7', <Svg.Component7 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: {
+                className: 'w-100 features-content d-flex flex-column align-items-center justify-content-center h-100',
+              },
+              children: commonChildren('i', 'content-first', a),
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'row' },
+              children: Array(4).fill({
+                type: 'div',
+                styles: { className: 'col-12 col-md-6' },
+                children: commonChildren('i', 'content-first', a),
+              }),
+            },
+          ],
+        },
+      ],
+    },
+  ]),
+  createComponent('component-8', 'Component 8', <Svg.Component8 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-12' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column align-items-center justify-content-center h-100' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex align-items-center flex-column gap-3' },
+                  children: [{ type: 'h2', content: heading, order: 'content-first' }],
+                },
+                {
+                  type: 'p',
+                  styles: { className: 'text-center' },
+                  content: description,
+                  order: 'content-first',
+                  children: [
+                    { type: 'p', children: [{ type: 'a', content: 'Read More', styles: { className: a }, href: '#' }] },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-12' },
+          children: [{ type: 'img', styles: { className: img }, content: images.image_53 }],
+        },
+      ],
+    },
+  ]),
   createComponent(
     'component-9',
     'Component 9',
@@ -150,6 +225,328 @@ export const sections = [
       children: commonChildren('img', 'content-first', a, images.image_28, roundImg, '150px'),
     })
   ),
+  createComponent('component-11', 'Component 11', <Svg.Component11 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex w-100 align-items-center flex-column justify-content-center h-100' },
+              children: Array(3).fill({
+                type: 'div',
+                styles: { className: 'd-flex flex-column align-items-start' },
+                children: [
+                  {
+                    type: 'div',
+                    styles: { className: 'd-flex align-items-center flex-column gap-3' },
+                    children: [{ type: 'h2', content: heading, order: 'content-first' }],
+                  },
+                  { type: 'p', content: description, order: 'content-first' },
+                ],
+              }),
+            },
+          ],
+        },
+      ],
+    },
+  ]),
+  createComponent('component-12', 'Component 12', <Svg.Component12 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: Array(2).fill({
+        type: 'div',
+        styles: { className: 'col-12 col-md-6' },
+        children: [
+          {
+            type: 'div',
+            styles: { className: 'd-flex flex-column align-items-start' },
+            children: [
+              {
+                type: 'div',
+                styles: { className: 'd-flex align-items-start flex-column gap-3' },
+                children: [
+                  { type: 'img', styles: { className: img }, content: images.image_57 },
+                  { type: 'h2', content: heading, order: 'content-first' },
+                ],
+              },
+              {
+                type: 'p',
+                content: description,
+                order: 'content-first',
+                children: [
+                  {
+                    type: 'p',
+                    children: [{ type: 'a', content: 'Read More', styles: { className: a }, href: '#' }],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }),
+    },
+  ]),
+  createComponent('component-13', 'Component 13', <Svg.Component13 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: Array(2).fill({
+        type: 'div',
+        styles: { className: 'col-12 col-md-6' },
+        children: [
+          {
+            type: 'div',
+            styles: { className: 'd-flex flex-column gap-3' },
+            children: Array(2).fill({
+              type: 'div',
+              styles: { className: 'd-flex flex-column flex-md-row align-items-start bg-light' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex align-items-start flex-column gap-3 me-3' },
+                  children: [{ type: 'i', styles: { className: icon } }],
+                },
+                {
+                  type: 'div',
+                  children: [
+                    { type: 'h2', content: heading, order: 'content-first' },
+                    { type: 'p', content: description, order: 'content-first' },
+                    {
+                      type: 'p',
+                      children: [{ type: 'a', content: 'Read More', styles: { className: a }, href: '#' }],
+                    },
+                  ],
+                },
+              ],
+            }),
+          },
+        ],
+      }),
+    },
+  ]),
+  createComponent(
+    'component-14',
+    'Component 14',
+    <Svg.Component14 />,
+    Array(2).fill({
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column gap-3' },
+              children: [{ type: 'img', styles: { className: img }, content: images.image_53 }],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column gap-3' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: ' d-flex flex-column flex-md-row align-items-start' },
+                  children: [
+                    {
+                      type: 'div',
+                      children: [
+                        { type: 'h2', content: heading, order: 'content-first' },
+                        { type: 'p', content: description, order: 'content-first' },
+                        {
+                          type: 'p',
+                          children: [{ type: 'a', content: 'Read More', styles: { className: a }, href: '#' }],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+  ),
+  createComponent('component-15', 'Component 15', <Svg.Component15 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column gap-3' },
+              children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex bg-light w-100 h-100 align-items-center p-4' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex flex-column align-items-center' },
+                  children: commonChildren('img', 'content-first', a, images.image_28, roundImg, '150px'),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]),
+  createComponent('component-16', 'Component 16', <Svg.Component16 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column gap-3' },
+              children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex bg-light w-100 h-100 align-items-center p-4' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex flex-column align-items-center' },
+                  children: commonChildren('img', 'content-first', a),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]),
+  createComponent('component-17', 'Component 17', <Svg.Component17 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-4' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column align-items-center' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex align-items-center flex-column gap-3' },
+                  children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-4' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'w-100 d-flex flex-column align-items-center justify-content-center h-100' },
+              children: commonChildren('img', 'content-first', a),
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-4' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column align-items-center' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'd-flex align-items-center flex-column gap-3' },
+                  children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]),
+  createComponent('component-18', 'Component 18', <Svg.Component18 />, [
+    {
+      type: 'div',
+      styles: { className: 'row' },
+      children: [
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex flex-column' },
+              children: [{ type: 'img', styles: { className: img }, content: images.image_57 }],
+            },
+          ],
+        },
+        {
+          type: 'div',
+          styles: { className: 'col-12 col-md-6' },
+          children: [
+            {
+              type: 'div',
+              styles: { className: 'd-flex align-items-center h-100' },
+              children: [
+                {
+                  type: 'div',
+                  styles: { className: 'w-100 d-flex flex-column align-items-center p-4' },
+                  children: commonChildren('img', 'content-first', a),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]),
   createComponent(
     'component-19',
     'Component 19',
