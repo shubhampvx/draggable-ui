@@ -4,7 +4,6 @@ import { borderTypes } from './constants';
 type Props = {
   localStyles: Record<string, string>;
   handleStyleChange: (key: string, value: string) => void;
-  borderStyle: string;
 };
 
 const BorderAccordion = (props: Props) => {
@@ -18,7 +17,7 @@ const BorderAccordion = (props: Props) => {
               <label className="form-label">Border Style</label>
               <select
                 className="form-select"
-                value={props.borderStyle}
+                value={props.localStyles['border-style'] || 'none'}
                 onChange={(e) => props.handleStyleChange('border-style', e.target.value)}
               >
                 {borderTypes.map((item) => (

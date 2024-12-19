@@ -103,7 +103,7 @@ export const sections = [
               content: heading,
               styles: { className: i === 0 ? 'text-end' : 'text-start' },
               children: [{ type: 'i', styles: { className: icon } }],
-              order: 'content-last',
+              order: i === 0 ? 'content-first' : 'content-last',
             },
             { type: 'p', styles: { className: `mt-3 text-${i === 0 ? 'end' : 'start'}` }, content: description },
           ],
